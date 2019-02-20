@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Github;
 use App\Http\Controllers\Controller;
 use Socialite;
 use Illuminate\Http\Request;
+use App\Model\Post;
 
 class GithubController extends Controller
 {
@@ -23,14 +24,21 @@ class GithubController extends Controller
             'auth' => [$user->user['login'], $token]
         ]);
 
-        return view('github', [
-            'info' => var_dump($user),
+        return redirect('upload');
+        /*
+        $posts = Post::all(); // 全データの取り出し
+
+        // return view('github', [
+        return view('home2', [
+            //'info' => var_dump($user),
             'nickname' => $user->nickname,
             'token' => $token,
             'repos' => array_map(function($o) {
                 return $o->name;
-            }, json_decode($res->getBody()))
+            }, json_decode($res->getBody())),
+            'posts' => $posts
         ]);
+        */
     }
 
     public function createIssue(Request $request)
