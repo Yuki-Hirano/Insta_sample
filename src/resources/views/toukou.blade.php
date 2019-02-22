@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <a href='upload'>ホーム</a>
-  @isset($nickname)
+  <a href='/'>ホーム</a>
+  @if($login_state)
   <a href='logout'>ログアウト</a>
   @else
   <a href='login'>ログイン</a>
-  @endisset
+  @endif
   <a href='write_post'>投稿</a>
 
   <title>投稿画面</title>
@@ -26,7 +26,7 @@
   @endif
 
   <!-- フォーム -->
-  <form action="{{ url('upload') }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ url('/') }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     <label for="photo">写真を選択:</label>
     <div class="imgInput">

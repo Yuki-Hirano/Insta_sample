@@ -2,24 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
-use App\Model;
 use Socialite;
 use App\Model\Post;
 
-class HomeController2 extends Controller
-{
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('home');
-    }
 
+class PostController extends Controller
+{
+    //
     /**
      * ファイルアップロード処理
      */
@@ -54,7 +44,8 @@ class HomeController2 extends Controller
                           'caption' => $request->caption, 'created_at' => $now, 'updated_at' => $now]);
             $posts = Post::all(); // 全データの取り出し
             //return view('home')->with('filename', basename($path));
-            return view('home2',['posts'=>$posts]);
+            $login_state = $request->session()->get('github_token', null);
+            return view('home',['posts'=>$posts,'login_state' => $login_state]);
             //return view('home2')->with(['path'=>basename($path), 'caption'=>$request->caption]);
 
         } else {
@@ -65,9 +56,4 @@ class HomeController2 extends Controller
         }
     }
 
-    public function viewing()
-    {
-      $posts = Post::all(); // 全データの取り出し
-      return view('home2',['posts'=>$posts]);
-    }
 }

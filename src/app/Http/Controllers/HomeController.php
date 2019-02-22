@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Model\Image;
+use App\Model;
+use Socialite;
+use App\Model\Post;
+
 
 class HomeController extends Controller
 {
@@ -18,36 +21,21 @@ class HomeController extends Controller
         return view('home');
     }
 
-    /**
-     * ファイルアップロード処理
-     */
-    public function upload(Request $request)
+
+    public function viewing(Request $request)
     {
-        $this->validate($request, [
-            'file' => [
-                // 必須
-                'required',
-                // アップロードされたファイルであること
-                'file',
-                // 画像ファイルであること
-                'image',
-                // MIMEタイプを指定
-                'mimes:jpeg,png',
-            ]
-        ]);
+      $posts = Post::all(); // 全データの取り出し
+      $login_state = $request->session()->get('github_token', null);
+      if($login_state == null){
+        return redirect('login');
+      }else{
+      return view('home',['posts' => $posts,'login_state' => $login_state]);
+    }
+    }
 
-        if ($request->file('file')->isValid([])) {
-            $path = $request->file->store('public/profile');
-            Image::insert(["path" => $path]);
-            $images = Image::all(); // 全データの取り出し
-            //return view('home')->with('filename', basename($path));
-            return view('home',['images'=>$images]);
-
-        } else {
-            return redirect()
-                ->back()
-                ->withInput()
-                ->withErrors();
-        }
+    public function redirectToPostpage(Request $request)
+    {
+      $login_state = $request->session()->get('github_token', null);
+      return view('toukou',['login_state' => $login_state]);
     }
 }

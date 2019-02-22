@@ -14,10 +14,10 @@ class CreateGithubUsersTable extends Migration
     public function up()
     {
         Schema::create('github_users', function (Blueprint $table) {
-          $table->increments('id');
-          $table->string('name');
-          $table->string('icon_path');
-          $table->integer('total_favorite');
+          //$table->increments('id');
+          $table->string('github_id');
+          //$table->string('icon_url');
+          //$table->integer('total_favorite');
           $table->timestamps();
         });
     }

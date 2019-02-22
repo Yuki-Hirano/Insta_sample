@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('user_name');
             $table->string('image_path');
             $table->string('caption')->nullable();
+            //$table->integer('favorites_count')->default(0);
             $table->timestamps();
         });
     }

@@ -28,21 +28,16 @@ Route::get('github', 'Github\GithubController@top');
 //Route::post('github/issue', 'Github\GithubController@createIssue');
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
-Route::post('/user', 'Users\UserController@updateUser');
+//Route::post('/user', 'Users\UserController@updateUser');
 //Route::get('/', 'HomeController@index');
 //Route::post('/upload', 'HomeController@upload');
 
 //implement by myself
-Route::get('/login', function () {
-    return view('login');
-});
-Route::post('/upload', 'HomeController2@upload');
-Route::get('/upload', 'HomeController2@viewing');
-Route::get('/profile', 'ProfileController@top');
-Route::get('/write_post', function () {
-    return view('toukou');
-});
-Route::get('/logout', function () {
-    Auth::logout();
-    return redirect('login');
-});
+Route::get('/login', 'Auth\LoginController@redirectToInitialpage');
+Route::get('/logout','Auth\LoginController@Logout');
+Route::post('/', 'PostController@upload');
+Route::get('/', 'HomeController@viewing');
+Route::get('/profile', 'ProfileController@profileViewing');
+Route::get('/write_post', 'HomeController@redirectToPostpage');
+Route::post('/favorite', 'FavoriteController@registerFav');
+Route::post('/favorite_by', 'FavoriteController@showFavBy');

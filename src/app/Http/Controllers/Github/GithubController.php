@@ -24,21 +24,8 @@ class GithubController extends Controller
             'auth' => [$user->user['login'], $token]
         ]);
 
-        return redirect('upload');
-        /*
-        $posts = Post::all(); // 全データの取り出し
-
-        // return view('github', [
-        return view('home2', [
-            //'info' => var_dump($user),
-            'nickname' => $user->nickname,
-            'token' => $token,
-            'repos' => array_map(function($o) {
-                return $o->name;
-            }, json_decode($res->getBody())),
-            'posts' => $posts
-        ]);
-        */
+        return redirect('/');
+        
     }
 
     public function createIssue(Request $request)

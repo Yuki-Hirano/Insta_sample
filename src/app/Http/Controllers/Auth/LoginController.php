@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;// 追加！
 use Illuminate\Http\Request;// 追加！
 use Illuminate\Support\Facades\DB;
+use App\Model\Github_user;
 
 class LoginController extends Controller
 {
@@ -20,8 +21,6 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
-    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -38,6 +37,24 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+
+    /**
+    *ログイン状態ならhomeへリダイレクト
+    *そうでなければログインボタンの表示
+    */
+
+    public function redirectToInitialpage(Request $request)
+    {
+      /*
+      $login_state = $request->session()->get('github_token', null);
+      if($login_state){
+        return view('home',['posts' => [], 'login_state' => $login_state]);
+      }else{
+      */
+        return view('login');
+      //}
     }
 
     /**
@@ -58,14 +75,23 @@ class LoginController extends Controller
      public function handleProviderCallback(Request $request)
      {
          $github_user = Socialite::driver('github')->user();
+
          $now = date("Y/m/d H:i:s");
-         $app_user = DB::select('select * from public.user where github_id = ?', [$github_user->user['login']]);
+         //question: what is the difference of following two lines? (The latter one does not work well)
+         $app_user = DB::select('select * from public.github_users where github_id = ?', [$github_user->user['login']]);
+         //$app_user = Github_user::where('github_id', $github_user->user['login'])->get();
          if (empty($app_user)) {
-             DB::insert('insert into public.user (github_id, created_at, updated_at) values (?, ?, ?)', [$github_user->user['login'], $now, $now]);
+             //Github_user::insert(['github_id' => $github_user->user['login'],'icon_url' => $github_user->user['avatar_url'],'created_at' => $now, 'updated_at' => $now]);
+             Github_user::insert(['github_id' => $github_user->user['login'],'created_at' => $now, 'updated_at' => $now]);
          }
          $request->session()->put('github_token', $github_user->token);
 
-         return redirect('github');
+         return redirect('/');
+     }
+
+     public function Logout(Request $request){
+       $request->session()->flush();
+       return redirect('login');
      }
 
 }
