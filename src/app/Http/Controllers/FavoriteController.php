@@ -21,7 +21,7 @@ class FavoriteController extends Controller
         Favorite::where([['github_id', $user->user['login']], ['post_id', $request->post_id]])->delete();
       }
 
-      return redirect('/');
+      return redirect('/home');
     }
 
     public function showFavBy(Request $request){

@@ -1,21 +1,35 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <a href='/'>ホーム</a>
-  @if($login_state)
-  <a href='logout'>ログアウト</a>
-  @else
-  <a href='login'>ログイン</a>
-  @endif
-  <a href='write_post'>投稿</a>
-
-  <title>投稿画面</title>
+    <title>投稿画面</title>
+    <link rel="stylesheet" href="/css/uikit.min.css" />
+    <link rel="stylesheet" href="/css/position.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/js/uikit.min.js"></script>
+    <script src="/js/uikit-icons.min.js"></script>
+    <header id='top'>
+      <nav class="uk-navbar uk-margin-small-bottom">
+      <div class="uk-container uk-container-center">
+       <div class="uk-grid">
+        <div class="uk-width-large-1-1">
+          <ul class="uk-navbar-nav uk-hidden-small">
+              <li><a href="/home">ホーム</a></li>
+              @if($login_state)
+              <li><a href='/logout'>ログアウト</a></li>
+              @else
+              <li><a href='/login'>ログイン</a></li>
+              @endif
+               <li><a href="/write_post">投稿</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </nav>
+    </header>
 </head>
 
 <body>
+  <div id='main'>
   <!-- エラーメッセージ。なければ表示しない -->
   @if ($errors->any())
   <ul>
@@ -26,9 +40,9 @@
   @endif
 
   <!-- フォーム -->
-  <form action="{{ url('/') }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ url('/home') }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
-    <label for="photo">写真を選択:</label>
+    <label for="photo"></label>
     <div class="imgInput">
     <input type="file" class="form-control" name="file">
     </div>
@@ -79,5 +93,6 @@
       });
   });
   </script>
+</div>
 </body>
 </html>

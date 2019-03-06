@@ -42,7 +42,7 @@ class PostController extends Controller
             //Post::insert(['user_name' => $user->nickname, 'image_path' => basename($path), 'caption' => $request->caption]);
             Post::insert(['user_name' => $user->nickname, 'image_path' => basename($path),
                           'caption' => $request->caption, 'created_at' => $now, 'updated_at' => $now]);
-            $posts = Post::all(); // 全データの取り出し
+            $posts = Post::simplePaginate(10); // 全データの取り出し
             //return view('home')->with('filename', basename($path));
             $login_state = $request->session()->get('github_token', null);
             return view('home',['posts'=>$posts,'login_state' => $login_state]);

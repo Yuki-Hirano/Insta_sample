@@ -24,7 +24,8 @@ class HomeController extends Controller
 
     public function viewing(Request $request)
     {
-      $posts = Post::all(); // 全データの取り出し
+      $posts = Post::simplePaginate(10); // 全データの取り出し
+      $posts->setPath('/home');
       $login_state = $request->session()->get('github_token', null);
       if($login_state == null){
         return redirect('login');

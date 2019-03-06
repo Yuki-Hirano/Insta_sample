@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+header#top {position: fixed;
+      text-align: center;
+      width: 100%;
+      top: 0pt;
+      z-index: 999;
+      background-color: white;}
+
+#login_button{
+  margin-top: 30pt;
+}
+
+#main {
+        position: relative;
+        margin-top: 100pt;
+        width: 100%;
+        text-align: center;}
+
+.center {
+      text-align: center;
+    }

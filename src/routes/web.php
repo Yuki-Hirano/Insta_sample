@@ -35,9 +35,9 @@ Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback
 //implement by myself
 Route::get('/login', 'Auth\LoginController@redirectToInitialpage');
 Route::get('/logout','Auth\LoginController@Logout');
-Route::post('/', 'PostController@upload');
-Route::get('/', 'HomeController@viewing');
-Route::get('/profile', 'ProfileController@profileViewing');
+Route::post('/home', 'PostController@upload');
+Route::get('/home', 'HomeController@viewing');
+Route::get('/profile/{user_name}', 'ProfileController@profileViewing');
 Route::get('/write_post', 'HomeController@redirectToPostpage');
 Route::post('/favorite', 'FavoriteController@registerFav');
 Route::post('/favorite_by', 'FavoriteController@showFavBy');

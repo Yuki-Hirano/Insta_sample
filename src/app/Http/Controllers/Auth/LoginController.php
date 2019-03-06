@@ -86,7 +86,7 @@ class LoginController extends Controller
          }
          $request->session()->put('github_token', $github_user->token);
 
-         return redirect('/');
+         return redirect('/home');
      }
 
      public function Logout(Request $request){
