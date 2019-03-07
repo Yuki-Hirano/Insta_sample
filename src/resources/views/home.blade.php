@@ -57,11 +57,17 @@
       <input type = 'hidden' name = 'post_id' value ={{$post->id}}>
       @if ($post->favorites()->where('github_id',Socialite::driver('github')->userFromToken($login_state)->user['login'])->first())
       <button class='uk-icon-button' type='submit' name = 'fav_on' value = 0 >
-        <img src='storage/icon/star_on.png'></img>
+        <?php
+        $img = base64_encode(file_get_contents('https://2.bp.blogspot.com/-iLvMf6s3b6M/V0QnoQqvVzI/AAAAAAAA69w/AdU5l6HIy3MX5CTXrfbMNNLbuksyyoC3QCLcB/s800/small_star7_yellow.png'));
+        ?>
+        <img src="data:image/png;base64,<?php echo $img; ?>">
       </button>
       @else
       <button class='uk-icon-button' type='submit' name = 'fav_on' value = 1 >
-        <img src='storage/icon/star_off.png'></img>
+        <?php
+        $img = base64_encode(file_get_contents('http://i-love-handmade.com/sozai/wp-content/uploads/2016/08/star-hanko-sen.png'));
+        ?>
+        <img src="data:image/png;base64,<?php echo $img; ?>">
         </button>
       @endif
     </form>
