@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model;
 use Socialite;
 use App\Model\Post;
+use Illuminate\Support\Facades\Auth;
 
 
 class HomeController extends Controller
@@ -24,14 +25,11 @@ class HomeController extends Controller
 
     public function viewing(Request $request)
     {
+      $login_state = $request->session()->get('github_token', null);
       $posts = Post::simplePaginate(10); // 全データの取り出し
       $posts->setPath('/home');
-      $login_state = $request->session()->get('github_token', null);
-      if($login_state == null){
-        return redirect('login');
-      }else{
       return view('home',['posts' => $posts,'login_state' => $login_state]);
-    }
+
     }
 
     public function redirectToPostpage(Request $request)

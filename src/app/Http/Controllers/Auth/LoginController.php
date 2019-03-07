@@ -8,6 +8,7 @@ use Socialite;// 追加！
 use Illuminate\Http\Request;// 追加！
 use Illuminate\Support\Facades\DB;
 use App\Model\Github_user;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -77,7 +78,7 @@ class LoginController extends Controller
          $github_user = Socialite::driver('github')->user();
 
          $now = date("Y/m/d H:i:s");
-         //question: what is the difference of following two lines? (The latter one does not work well)
+
          $app_user = DB::select('select * from public.github_users where github_id = ?', [$github_user->user['login']]);
          //$app_user = Github_user::where('github_id', $github_user->user['login'])->get();
          if (empty($app_user)) {
@@ -91,7 +92,7 @@ class LoginController extends Controller
 
      public function Logout(Request $request){
        $request->session()->flush();
-       return redirect('login');
+       return redirect('/login');
      }
 
 }

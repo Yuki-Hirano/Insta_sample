@@ -31,7 +31,6 @@
 
 <body>
   <div id='main'>
-<!-- エラーメッセージ。なければ表示しない -->
 @if ($errors->any())
 <ul>
     @foreach($errors->all() as $error)
@@ -48,7 +47,8 @@
     <a href='profile/{{$post->user_name}}' class='uk-card-header'>{{$post->user_name}}</a>
     <br>
     <div class='uk-card-body'>
-    <img src="{{ asset('storage/post/' . $post -> image_path) }}" height=300pt width=400pt><br>
+    <!--<img src="{{ asset('storage/post/' . $post -> image_path) }}" height=300pt width=400pt><br>-->
+    <img src="data:image/png;base64,<?= $post->image ?>" height=300pt width=400pt><br>
     <span class='uk-text-bold uk-text-emphasis uk-text-large uk-text-left'>{{$post->caption}}</span>
   </div>
   <div class='uk-card-footer left'>
