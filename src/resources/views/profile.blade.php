@@ -40,7 +40,8 @@
   いいね総数： {{$fav_count}}
   <br>
   @foreach($self_posts as $post)
-     <img src="{{ asset('storage/post/' . $post -> image_path) }}" height='auto' width='33%'>
+     <!--<img src="{{ asset('storage/post/' . $post -> image_path) }}" height='auto' width='33%'>-->
+     <img src="data:image/png;base64,<?= $post->image ?>"　height='auto' width=33%>
   @endforeach
 </div>
 </body>

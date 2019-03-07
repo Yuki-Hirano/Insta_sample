@@ -44,8 +44,9 @@
     {{ csrf_field() }}
     <label for="photo"></label>
     <div class="imgInput">
-    <input type="file" class="form-control" name="file">
+    <input type="file" id="file" name="file">
     </div>
+    <div id="result"></div>
     <br>
     キャプション:<br>
     <textarea name="caption" rows="4" cols="40"></textarea>
@@ -56,42 +57,19 @@
 
   <script>
   $(function(){
-      var setFileInput = $('.imgInput');
-
-      setFileInput.each(function(){
-          var selfFile = $(this),
-          selfInput = $(this).find('input[type=file]');
-
-          selfInput.change(function(){
-              var file = $(this).prop('files')[0],
-              fileRdr = new FileReader(),
-              selfImg = selfFile.find('.imgView');
-
-              if(!this.files.length){
-                  if(0 < selfImg.size()){
-                      selfImg.remove();
-                      return;
-                  }
-              } else {
-                  if(file.type.match('image.*')){
-                      if(!(0 < selfImg.size())){
-                          selfFile.append('<img alt="" class="imgView" height=300pt width=400pt>');
-                      }
-                      var prevElm = selfFile.find('.imgView');
-                      fileRdr.onload = function() {
-                          prevElm.attr('src', fileRdr.result);
-                      }
-                      fileRdr.readAsDataURL(file);
-                  } else {
-                      if(0 < selfImg.size()){
-                          selfImg.remove();
-                          return;
-                      }
-                  }
-              }
-          });
-      });
-  });
+    $('#file').change(function(){
+        $('img').remove();
+        var file = $(this).prop('files')[0];
+        if(!file.type.match('image.*')){
+            return;
+        }
+        var fileReader = new FileReader();
+        fileReader.onloadend = function() {
+            $('#result').html('<img src="' + fileReader.result + '" height=300pt width=400pt/>');
+        }
+        fileReader.readAsDataURL(file);
+    });
+});
   </script>
 </div>
 </body>
