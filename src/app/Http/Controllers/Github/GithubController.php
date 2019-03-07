@@ -24,8 +24,8 @@ class GithubController extends Controller
             'auth' => [$user->user['login'], $token]
         ]);
 
-        return redirect('/');
-        
+        return redirect('/home');
+
     }
 
     public function createIssue(Request $request)

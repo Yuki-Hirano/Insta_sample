@@ -13,26 +13,11 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});
-*/
 
-//STEP1
-//Route::get('/user', 'UserController@index');
-//Route::get('/bbs', 'BbsController@index');
-//Route::post('/bbs', 'BbsController@create');
 
-//sample
 Route::get('github', 'Github\GithubController@top');
-//Route::post('github/issue', 'Github\GithubController@createIssue');
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
-//Route::post('/user', 'Users\UserController@updateUser');
-//Route::get('/', 'HomeController@index');
-//Route::post('/upload', 'HomeController@upload');
-
-//implement by myself
 Route::get('/login', 'Auth\LoginController@redirectToInitialpage');
 Route::get('/logout','Auth\LoginController@Logout');
 Route::post('/home', 'PostController@upload');
